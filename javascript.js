@@ -8,29 +8,52 @@ fetch('https://hplussport.com/api/products?order=name')
 .then(
     function (data) 
     {
-        for(items in data)
-        {
-            var productname = data[items].name;
-            var products = document.createElement('li');
-            products.innerHTML = productname;
-            document.body.appendChild(products);
+    
+     // Created a container UL for products
+    var productList = document.createElement('ul');
+    productList.className = 'product-list';
+    document.body.appendChild(productList);
 
-            var productimage = data[items].image;
-            var productimg = document.createElement('img');
-            productimg.setAttribute('src',productimage) ;
-            document.body.appendChild(productimg);
+    for (let item of data) {
+        // Create product item container
+        var productItem = document.createElement('li');
+        productItem.className = 'product-item';
 
-            var productdescription = data[items].description;
-            var descript = document.createElement('li');
-            descript.innerHTML = productdescription;
-            document.body.appendChild(descript);
+        // Product image
+        var productImg = document.createElement('img');
+        productImg.className = 'product-img';
+        productImg.setAttribute('src', item.image);
+        productImg.setAttribute('alt', item.name);
 
-            var productprice = data[items].price;
-            var productprices = document.createElement('li');
-            productprices.innerHTML = 'R' + productprice;
-            document.body.appendChild( productprices);
+        // Product details container
+        var details = document.createElement('div');
+        details.className = 'product-details';
 
-            console.log(productname);
-        }
+        // Product name
+        var name = document.createElement('div');
+        name.className = 'product-name';
+        name.innerHTML = item.name;
+
+        // Product description
+        var desc = document.createElement('div');
+        desc.className = 'product-description';
+        desc.innerHTML = item.description;
+
+        // Product price
+        var price = document.createElement('div');
+        price.className = 'product-price';
+        price.innerHTML = 'R' + item.price;
+
+        // Assemble details
+        details.appendChild(name);
+        details.appendChild(desc);
+        details.appendChild(price);
+
+        // Assemble product item
+        productItem.appendChild(productImg);
+        productItem.appendChild(details);
+
+        // Add to product list
+        productList.appendChild(productItem);
     }
-)
+});
