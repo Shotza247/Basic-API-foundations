@@ -11,5 +11,9 @@ fetch('https://hplussport.com/api/products?qty=2&order=name')
         console.log(data);
         var description = data[0].description;
         console.log(description);
+
+        var product  = document.createElement("li")
+        product.innerHTML = data[0].name;
+        document.body.appendChild(product)
     }
 )
