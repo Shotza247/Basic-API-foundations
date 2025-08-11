@@ -9,5 +9,7 @@ fetch('https://hplussport.com/api/products?qty=2&order=name')
     function (data) 
     {
         console.log(data);
+        var description = data[0].description;
+        console.log(description);
     }
 )
