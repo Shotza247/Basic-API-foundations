@@ -1,4 +1,4 @@
-fetch('https://hplussport.com/api/products?qty=2')
+fetch('https://hplussport.com/api/products?qty=2&order=name')
 .then(
     function (response) 
     {
