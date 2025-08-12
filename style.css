@@ -5,51 +5,153 @@
     text-decoration: underline;
 }
 .product-list {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 30px auto;
     padding: 0;
     list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
 }
 
 .product-item {
     display: flex;
-    align-items: flex-start;
-    gap: 20px;
+    flex-direction: column;
     background: #f9f9f9;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    margin-bottom: 20px;
     padding: 16px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
+
 .product-img {
-    width: 120px;
-    height: 120px;
+    width: 100%;
+    height: 200px;
     object-fit: cover;
     border-radius: 6px;
-    border: 1px solid #ccc;
-    background: #fff;
+    margin-bottom: 16px;
 }
 
-.product-details {
-    flex: 1;
+.view-details-btn {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.product-name {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #222;
+.view-details-btn:hover {
+    background-color: #0056b3;
 }
 
-.product-description {
-    font-size: 1em;
-    margin-bottom: 8px;
-    color: #444;
+/* Styles for the details modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    z-index: 1000;
+    overflow-y: auto; /* Allow scrolling if content is too long */
+    padding: 20px;
 }
 
-.product-price {
-    font-size: 1.1em;
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 20px auto;
+    padding: 25px;
+    width: 90%;
+    max-width: 1000px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+
+.modal-image-container {
+    width: 100%;
+    max-height: 70vh; /* Maximum 70% of viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.modal img {
+    max-width: 100%;
+    max-height: 60vh; /* Maximum 60% of viewport height */
+    object-fit: contain; /* Maintain aspect ratio */
+    border-radius: 8px;
+}
+
+.modal h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem); /* Responsive font size */
+    margin: 15px 0;
+    color: #333;
+}
+
+.modal .product-description {
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    line-height: 1.6;
+    color: #555;
+    margin: 15px 0;
+}
+
+.modal .product-price {
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
     color: #007b3a;
     font-weight: bold;
+    margin: 15px 0;
+}
+
+.close-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+    background: rgba(0,0,0,0.1);
+    color: #000;
+}
+
+/* Media Queries for better responsiveness */
+@media screen and (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+        margin: 10px auto;
+    }
+
+    .modal {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .modal-content {
+        padding: 10px;
+    }
+
+    .close-btn {
+        right: 10px;
+        top: 10px;
+    }
 }
