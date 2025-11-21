@@ -1,157 +1,178 @@
-.title {
+body {
+    font-family: "Inter", sans-serif;
+    margin: 0;
+    background: #f5f7fa;
+    color: #333;
+}
+
+header {
     text-align: center;
-    font-style: italic;
-    color: blue;
-    text-decoration: underline;
+    padding: 40px 20px 20px;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.4rem;
+    margin: 0;
+    color: #0a3d62;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin-top: 8px;
 }
 .product-list {
     max-width: 1200px;
-    margin: 30px auto;
+    margin: auto;
     padding: 0;
     list-style: none;
+
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
 }
 
-.product-item {
-    display: flex;
-    flex-direction: column;
-    background: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+.product-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
 }
 
 .product-img {
     width: 100%;
-    height: 200px;
+    height: 220px;
     object-fit: cover;
-    border-radius: 6px;
-    margin-bottom: 16px;
 }
 
-.view-details-btn {
-    margin-top: 16px;
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: white;
+.product-content {
+    padding: 16px 20px;
+    text-align: center;
+}
+
+.product-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 8px 0;
+}
+
+.product-price {
+    font-size: 1.15rem;
+    font-weight: bold;
+    color: #1e8f5f;
+    margin: 10px 0 15px;
+}
+
+.btn {
+    padding: 10px 16px;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
+    background: #0a84ff;
+    color: white;
     cursor: pointer;
-    transition: background-color 0.3s;
+    font-weight: 600;
+    transition: background .25s;
 }
 
-.view-details-btn:hover {
-    background-color: #0056b3;
+.btn:hover {
+    background: #0066cc;
 }
-
-/* Styles for the details modal */
 .modal {
     display: none;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.8);
-    z-index: 1000;
-    overflow-y: auto; /* Allow scrolling if content is too long */
-    padding: 20px;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.75);
+    z-index: 2000;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 60px;
 }
 
 .modal-content {
-    position: relative;
-    background-color: white;
-    margin: 20px auto;
-    padding: 25px;
+    background: white;
     width: 90%;
-    max-width: 1000px;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    max-width: 750px;
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    position: relative;
+    animation: fadeUp 0.3s ease-out;
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.4s forwards ease-out;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
 }
 
 .modal-image-container {
-    width: 100%;
-    max-height: 70vh; /* Maximum 70% of viewport height */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    overflow: hidden;
+    text-align: center;
+    margin-bottom: 18px;
 }
 
-.modal img {
+.modal-image-container img {
     max-width: 100%;
-    max-height: 60vh; /* Maximum 60% of viewport height */
-    object-fit: contain; /* Maintain aspect ratio */
-    border-radius: 8px;
+    border-radius: 10px;
 }
 
 .modal h2 {
-    font-size: clamp(1.5rem, 3vw, 2rem); /* Responsive font size */
-    margin: 15px 0;
-    color: #333;
+    margin-top: 0;
+    color: #0a3d62;
+    font-size: 1.8rem;
 }
 
-.modal .product-description {
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    line-height: 1.6;
+.product-description {
+    font-size: 1rem;
     color: #555;
-    margin: 15px 0;
+    line-height: 1.6;
+    margin: 18px 0 10px;
 }
 
-.modal .product-price {
-    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-    color: #007b3a;
+.modal-price {
+    font-size: 1.4rem;
+    color: #1e8f5f;
     font-weight: bold;
-    margin: 15px 0;
+    margin-top: 15px;
 }
 
 .close-btn {
     position: absolute;
-    right: 20px;
-    top: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    color: #555;
+    top: 16px;
+    right: 18px;
+    font-size: 30px;
+    font-weight: 700;
+    color: #444;
     cursor: pointer;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
 .close-btn:hover {
-    background: rgba(0,0,0,0.1);
-    color: #000;
+    color: black;
 }
 
-/* Media Queries for better responsiveness */
-@media screen and (max-width: 768px) {
-    .modal-content {
-        width: 95%;
-        padding: 15px;
-        margin: 10px auto;
-    }
-
-    .modal {
-        padding: 10px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .modal-content {
-        padding: 10px;
-    }
-
-    .close-btn {
-        right: 10px;
-        top: 10px;
-    }
+/*Mobile Responsives*/
+@media (max-width: 600px) {
+    header h1 { font-size: 1.9rem; }
+    .modal-content { padding: 20px; }
+    .product-img { height: 180px; }
 }
