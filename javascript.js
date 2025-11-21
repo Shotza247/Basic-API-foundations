@@ -1,84 +1,60 @@
-fetch('https://hplussport.com/api/products?order=price')
-.then(function (response) {
-    return response.json();
-})
-.then(function (data) {
-    // Create a container UL for products
-    var productList = document.createElement('ul');
-    productList.className = 'product-list';
-    document.body.appendChild(productList);
+// Load products from API
+fetch("https://hplussport.com/api/products?order=price")
+    .then(response => response.json())
+    .then(data => renderProducts(data))
+    .catch(err => console.error("API Error:", err));
 
-    // Create modal container
-    var modal = document.createElement('div');
-    modal.className = 'modal';
+function renderProducts(data) {
+    const section = document.getElementById("product-section");
+
+    const productList = document.createElement("ul");
+    productList.className = "product-list";
+    section.appendChild(productList);
+
+    //created a global modal so functions can access it
+    const modal = document.createElement("div");
+    modal.className = "modal";
     document.body.appendChild(modal);
 
-    for (let item of data) {
-        // Create product item container
-        var productItem = document.createElement('li');
-        productItem.className = 'product-item';
+    data.forEach(item => {
+        const li = document.createElement("li");
+        li.className = "product-card";
 
-        // Product image
-        var productImg = document.createElement('img');
-        productImg.className = 'product-img';
-        productImg.setAttribute('src', item.image);
-        productImg.setAttribute('alt', item.name);
+        li.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="product-img">
 
-        // Product details container
-        var details = document.createElement('div');
-        details.className = 'product-details';
+            <div class="product-content">
+                <h3 class="product-name">${item.name}</h3>
+                <div class="product-price">R${item.price}</div>
+                <button class="btn" data-id="${item.id}">View Details</button>
+            </div>
+        `;
 
-        // Product name
-        var name = document.createElement('div');
-        name.className = 'product-name';
-        name.innerHTML = item.name;
+        li.querySelector("button").onclick = () => showProductDetails(item, modal);
 
-        // Product price
-        var price = document.createElement('div');
-        price.className = 'product-price';
-        price.innerHTML = 'R' + item.price;
+        productList.appendChild(li);
+    });
 
-        // View Details Button
-        var viewDetailsBtn = document.createElement('button');
-        viewDetailsBtn.className = 'view-details-btn';
-        viewDetailsBtn.innerHTML = 'View Details';
-        viewDetailsBtn.onclick = function() {
-            showProductDetails(item);
-        };
+    window.onclick = (event) => {  
+        if (event.target === modal) modal.style.display = "none";
+    };
+}
 
-        // Assemble details
-        details.appendChild(name);
-        details.appendChild(price);
-        details.appendChild(viewDetailsBtn);
-
-        // Assemble product item
-        productItem.appendChild(productImg);
-        productItem.appendChild(details);
-
-        // Add to product list
-        productList.appendChild(productItem);
-    }
-
-    // Function to show product details in modal
-    function showProductDetails(item) {
+function showProductDetails(item, modal) {
     modal.innerHTML = `
-        <div class="modal-content">
-            <span class="close-btn" onclick="document.querySelector('.modal').style.display='none'">&times;</span>
+        <div class="modal-content fade-in">
+            <span class="close-btn">&times;</span>
+
             <div class="modal-image-container">
                 <img src="${item.image}" alt="${item.name}">
             </div>
+
             <h2>${item.name}</h2>
             <p class="product-description">${item.description}</p>
-            <div class="product-price">R${item.price}</div>
+            <div class="modal-price">R${item.price}</div>
         </div>
     `;
-    modal.style.display = 'block';
-}
 
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    }
-});
+    modal.style.display = "block";
+    modal.querySelector(".close-btn").onclick = () => modal.style.display = "none";
+}
